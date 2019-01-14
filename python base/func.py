@@ -78,3 +78,39 @@ l = [x for x in range(1, 20)]
 L = list(filter(lambda x: x % 2 == 1, l))
 
 print(L)
+
+
+def count():
+    fs = []
+    for i in range(1, 4):
+        def fun():
+            return i ** 2
+
+        fs.append(fun)
+
+    return fs
+
+
+# 在上面的例子中，每次循环，都创建了一个新的函数，然后，把创建的3个函数都返回了。
+# 全部都是9！原因就在于返回的函数引用了变量i，但它并非立刻执行。等到3个函数都返回时，它们所引用的变量i已经变成了3，因此最终结果为9。
+#
+#  返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+
+
+f1, f2, f3 = count()
+print(f1.__name__ + str(f1()))
+print(f2())
+print(f3())
+
+
+#
+# 函数的变长参数 *args 和 **kwarg, 即参数列表(tuple)和关键字参数(dict)
+
+def fun_param(a, b, *args, **kwargs):
+    print("a is %s" % a)
+    print("b is %s" % b)
+    print(str(type(args) )+ "--" + str(len(args)))
+    print(type(kwargs))
+
+
+fun_param( 1, 2, 3, 4, 5, abc = "abc")
