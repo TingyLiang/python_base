@@ -52,9 +52,14 @@ class Student(object):
         else:
             raise ValueError("attribute name can not be None")
 
+    # 定义此方法，可以把对象当做函数调用
+    def __call__(self, *args, **kwargs):
+        print("my name is " + self.name)
+
 
 alice = Student("Alice")
 bob = Student("Bob")
+bob()  # 调用对象，这里实际是调用__call__方法
 # 属性绑定
 # stu.name = "Alice"
 alice.score = 93
@@ -92,3 +97,49 @@ david = Student("david")
 
 ted.hello_2("alice")
 david.hello_2("lty")
+
+
+# 下面测试多重继承
+class runnableMixIn(object):
+    count_thread = 0
+
+    def __init__(self):
+        pass
+
+    def run(self):
+        print("run in runnableMixIn")
+
+    def __pri_run(self):
+        print("private run in runnableMixIn")
+
+    @staticmethod  # 静态方法
+    def __sta_fun__():
+        print("static fun  in runnableMixIn")
+
+    @classmethod  # 类方法
+    def __increase_thread__(cls):
+        cls.count_thread += 1
+        print(cls.count_thread)
+
+
+class AnotherMixIn(object):
+    def __init__(self):
+        pass
+
+    def foo(self):
+        print("foo in AnotherMixIn")
+
+
+class TestMixIn(runnableMixIn, AnotherMixIn):
+    def __init__(self):
+        pass
+
+
+mixIn = TestMixIn()
+mixIn.run()  # 这里就可以使用父类的方法
+# mixIn.__pri_run() 私有方法不能继承
+# 静态类方法，
+mixIn.__sta_fun__()
+TestMixIn.__sta_fun__()
+
+TestMixIn.__increase_thread__()

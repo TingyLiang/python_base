@@ -21,8 +21,8 @@ print(type(x1))  # <class 'list'>
 x2 = (x for x in range(1, 10))
 print(type(x2))  # <class 'generator'>
 
-# for i in x2:
-#     print(i)
+for i in x2:
+    print(i, end=",")
 
 
 # 方式2 ,使用yield 关键字
@@ -32,7 +32,7 @@ def gen(start, end):
 
 
 g1 = gen(1, 10)
-print(g1) #generator object
+print(g1)  # generator object
 # 但是用for循环调用generator时，发现拿不到generator的return语句的返回值。如果想要拿到返回值，必须捕获StopIteration错误，返回值包含在StopIteration的value中：
 # for i in g1:
 #     print(i)
@@ -42,3 +42,5 @@ print(g1) #generator object
 # 直到没有数据时抛出StopIteration错误。可以把这个数据流看做是一个有序序列，但我们却不能提前知道序列的长度，
 # 只能不断通过next()函数实现按需计算下一个数据，所以Iterator的计算是惰性的，只有在需要返回下一个数据时它才会计算。
 
+
+print([x for x in range(5)])
